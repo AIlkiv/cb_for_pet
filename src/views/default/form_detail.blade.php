@@ -7,7 +7,7 @@ $type = @$form['type'] ?: 'text';
 if (in_array($type, $asset_already)) continue;
 
 ?>
-@if(file_exists(base_path('/vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/asset.blade.php')))
+@if(file_exists(base_path('/vendor/ailkiv/crudbooster/src/views/default/type_components/'.$type.'/asset.blade.php')))
     @include('crudbooster::default.type_components.'.$type.'.asset')
 @elseif(file_exists(resource_path('views/vendor/crudbooster/type_components/'.$type.'/asset.blade.php')))
     @include('vendor.crudbooster.type_components.'.$type.'.asset')
@@ -61,8 +61,8 @@ $asset_already[] = $type;
             $join_title = $join_arr[1];
             $join_table_pk = CB::pk($join_table);
             $join_fk = CB::getForeignKey($table, $join_table);
-            $join_query_{$join_table} = DB::table($join_table)->select($join_title)->where($join_table_pk, $row->{$join_fk})->first();
-            $value = @$join_query_{$join_table}->{$join_title};
+            ${'join_query_'.$join_table} = DB::table($join_table)->select($join_title)->where($join_table_pk, $row->{$join_fk})->first();
+            $value = @${'join_query_'.$join_table}->{$join_title};
         }
 
         $type = @$form['type'] ?: 'text';

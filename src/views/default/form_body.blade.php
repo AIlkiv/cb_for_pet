@@ -8,7 +8,7 @@ $name = $form['name'];
 
 if (in_array($type, $asset_already)) continue;
 ?>
-@if(file_exists(base_path('/vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/asset.blade.php')))
+@if(file_exists(base_path('/vendor/ailkiv/crudbooster/src/views/default/type_components/'.$type.'/asset.blade.php')))
     @include('crudbooster::default.type_components.'.$type.'.asset')
 @elseif(file_exists(resource_path('views/vendor/crudbooster/type_components/'.$type.'/asset.blade.php')))
     @include('vendor.crudbooster.type_components.'.$type.'.asset')
@@ -58,8 +58,8 @@ if ($join && @$row) {
     array_walk($join_arr, 'trim');
     $join_table = $join_arr[0];
     $join_title = $join_arr[1];
-    $join_query_{$join_table} = DB::table($join_table)->select($join_title)->where("id", $row->{'id_'.$join_table})->first();
-    $value = @$join_query_{$join_table}->{$join_title};
+    ${'join_query_'.$join_table} = DB::table($join_table)->select($join_title)->where("id", $row->{'id_'.$join_table})->first();
+    $value = @${'join_query_'.$join_table}->{$join_title};
 }
 $form['type'] = ($form['type']) ?: 'text';
 $type = @$form['type'];
@@ -82,7 +82,7 @@ if ($type == 'header') {
 }
 
 ?>
-@if(file_exists(base_path('/vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/component.blade.php')))
+@if(file_exists(base_path('/vendor/ailkiv/crudbooster/src/views/default/type_components/'.$type.'/component.blade.php')))
     @include('crudbooster::default.type_components.'.$type.'.component')
 @elseif(file_exists(resource_path('views/vendor/crudbooster/type_components/'.$type.'/component.blade.php')))
     @include('vendor.crudbooster.type_components.'.$type.'.component')
