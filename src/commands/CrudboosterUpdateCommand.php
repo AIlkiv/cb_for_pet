@@ -62,7 +62,7 @@ class CrudboosterUpdateCommand extends Command
 
         $this->info('Dumping the autoloaded files and reloading all new files...');
         $composer = $this->findComposer();
-        $process = new Process($composer.' dumpautoload');
+        $process = new Process([$composer.' dumpautoload']);
         $process->setWorkingDirectory(base_path())->run();
 
         $this->info('Migrating database...');
