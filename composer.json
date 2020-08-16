@@ -24,7 +24,7 @@
         "barryvdh/laravel-dompdf": "0.8.*",
         "doctrine/dbal": "~2.3",
         "maatwebsite/excel": "~3.1",
-        "unisharp/laravel-filemanager": "1.7.7",
+        "unisharp/laravel-filemanager": "1.9.2",
         "intervention/imagecache":"2.4.2",
         "imanghafoori/laravel-widgetize": "1.8.*"
     },
