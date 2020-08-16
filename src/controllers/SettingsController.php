@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Excel;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SettingsController extends CBController
 {
@@ -144,7 +145,7 @@ class SettingsController extends CBController
 
     function hook_before_add(&$arr)
     {
-        $arr['name'] = str_slug($arr['label'], '_');
+        $arr['name'] = Str::slug($arr['label'], '_');
         $this->return_url = CRUDBooster::mainpath("show")."?group=".$arr['group_setting'];
     }
 

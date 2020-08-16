@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Excel;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 
 class StatisticBuilderController extends CBController
 {
@@ -209,6 +210,6 @@ class StatisticBuilderController extends CBController
     public function hook_before_add(&$arr)
     {
         //Your code here
-        $arr['slug'] = str_slug($arr['name']);
+        $arr['slug'] = Str::slug($arr['name']);
     }
 }

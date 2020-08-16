@@ -1,5 +1,5 @@
 <?php
-$name = str_slug($form['label'], '');
+$name = \Illuminate\Support\Str::slug($form['label'], '');
 ?>
 @push('bottom')
     <script type="text/javascript">
@@ -350,7 +350,7 @@ $name = str_slug($form['label'], '');
                                         @if($col['formula'])
                                             <?php
                                             $formula = $col['formula'];
-                                            $formula_function_name = 'formula'.str_slug($name.$col['name'], '');
+                                            $formula_function_name = 'formula'.\Illuminate\Support\Str::slug($name.$col['name'], '');
                                             $script_onchange = "";
                                             foreach ($form['columns'] as $c) {
                                                 if (strpos($formula, "[".$c['name']."]") !== false) {

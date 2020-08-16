@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Schema;
 
@@ -904,7 +905,7 @@ class CBController extends Controller
             }
 
             if ($di['type'] == 'child') {
-                $slug_name = str_slug($di['label'], '');
+                $slug_name = Str::slug($di['label'], '');
                 foreach ($di['columns'] as $child_col) {
                     if (isset($child_col['validation'])) {
                         //https://laracasts.com/discuss/channels/general-discussion/array-validation-is-not-working/
@@ -1208,7 +1209,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'child') {
-                $name = str_slug($ro['label'], '');
+                $name = Str::slug($ro['label'], '');
                 $columns = $ro['columns'];
                 $getColName = Request::get($name.'-'.$columns[0]['name']);
                 $count_input_data = ($getColName)?(count($getColName) - 1):0;
@@ -1354,7 +1355,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'child') {
-                $name = str_slug($ro['label'], '');
+                $name = Str::slug($ro['label'], '');
                 $columns = $ro['columns'];
                 $getColName = Request::get($name.'-'.$columns[0]['name']);
                 $count_input_data = ($getColName)?(count($getColName) - 1):0;

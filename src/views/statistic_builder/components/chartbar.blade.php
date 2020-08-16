@@ -80,7 +80,7 @@
         $area_name = explode(';', $config->area_name);
         $area_name_safe = $area_name;
         foreach ($area_name_safe as &$a) {
-            $a = str_slug($a, '_');
+            $a = \Illuminate\Support\Str::slug($a, '_');
         }
 
         $data_result = array();
@@ -88,7 +88,7 @@
             $dr = array();
             $dr['y'] = $d;
             foreach ($area_name as $e => $name) {
-                $name = str_slug($name, '_');
+                $name = \Illuminate\Support\Str::slug($name, '_');
                 $dr[$name] = $dataPoints[$e][$i];
             }
             $data_result[] = $dr;

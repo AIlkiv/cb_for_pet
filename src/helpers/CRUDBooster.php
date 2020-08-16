@@ -11,6 +11,7 @@ use Schema;
 use Session;
 use Storage;
 use Validator;
+use Illuminate\Support\Str;
 
 class CRUDBooster
 {
@@ -68,7 +69,7 @@ class CRUDBooster
 
             $file = Request::file($name);
             $ext = $file->getClientOriginalExtension();
-            $filename = str_slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+            $filename = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
             $filesize = $file->getClientSize() / 1024;
             $file_path = 'uploads/'.$userID.'/'.date('Y-m');
 
@@ -78,7 +79,7 @@ class CRUDBooster
             if ($encrypt == true) {
                 $filename = md5(str_random(5)).'.'.$ext;
             } else {
-                $filename = str_slug($filename, '_').'.'.$ext;
+                $filename = Str::slug($filename, '_').'.'.$ext;
             }
 
             if (Storage::putFileAs($file_path, $file, $filename)) {
