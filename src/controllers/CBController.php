@@ -570,7 +570,7 @@ class CBController extends Controller
 
                 if ($col['str_limit']) {
                     $value = trim(strip_tags($value));
-                    $value = str_limit($value, $col['str_limit']);
+                    $value = Str::limit($value, $col['str_limit']);
                 }
 
                 if ($col['nl2br']) {
