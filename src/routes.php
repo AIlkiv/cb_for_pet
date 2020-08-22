@@ -47,8 +47,7 @@ Route::group([
     'namespace' => 'App\Http\Controllers',
 ], function () use ($namespace) {
  
-    Route::get('/',function () {
-    });
+    Route::get('/', '\crocodicstudio\crudbooster\controllers\AdminController@getIndex');
     try {
         $moduls = DB::table('cms_moduls')->where('path', '!=', '')->where('controller', '!=', '')
             ->where('is_protected', 0)->where('deleted_at', null)->get();
