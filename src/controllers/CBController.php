@@ -130,6 +130,7 @@ class CBController extends Controller
         $this->cbInit();
 
         $this->checkHideForm();
+        DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 
         $this->primary_key = CB::pk($this->table);
         $this->columns_table = $this->col;
