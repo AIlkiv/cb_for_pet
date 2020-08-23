@@ -17,12 +17,11 @@ class CRUDBoosterServiceProvider extends ServiceProvider
 
     public function boot()
     {        
-                                
+
         $this->loadViewsFrom(__DIR__.'/views', 'crudbooster');
         $this->publishes([__DIR__.'/configs/crudbooster.php' => config_path('crudbooster.php')],'cb_config');            
         $this->publishes([__DIR__.'/localization' => resource_path('lang')], 'cb_localization');                 
         $this->publishes([__DIR__.'/database' => base_path('database')],'cb_migration');
-
         $this->publishes([
             __DIR__.'/userfiles/views/vendor/crudbooster/type_components/readme.txt' => resource_path('views/vendor/crudbooster/type_components/readme.txt'),
         ],'cb_type_components');
@@ -30,17 +29,15 @@ class CRUDBoosterServiceProvider extends ServiceProvider
         if(!file_exists(app_path('Http/Controllers/CBHook.php'))) {
             $this->publishes([__DIR__.'/userfiles/controllers/CBHook.php' => app_path('Http/Controllers/CBHook.php')],'CBHook');
         }
-
         if(!file_exists(app_path('Http/Controllers/AdminCmsUsersController.php'))) {
             $this->publishes([__DIR__.'/userfiles/controllers/AdminCmsUsersController.php' => app_path('Http/Controllers/AdminCmsUsersController.php')],'cb_user_controller');
         }        
-
         $this->publishes([
             __DIR__.'/assets'=>public_path('vendor/crudbooster')
         ],'cb_asset');  
-                    
         require __DIR__.'/validations/validation.php';        
-        require __DIR__.'/routes.php';                        
+        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        #require __DIR__.'/routes.php';
     }
 
     /**
