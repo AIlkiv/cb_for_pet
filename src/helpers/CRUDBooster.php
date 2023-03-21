@@ -417,6 +417,10 @@ class CRUDBooster
 
         $menu = DB::table('cms_menus')->whereRaw("cms_menus.id IN (select id_cms_menus from cms_menus_privileges where id_cms_privileges = '".self::myPrivilegeId()."')")->where('is_dashboard', 1)->where('is_active', 1)->first();
 
+        if (empty($menu)) {
+            return null;
+        }
+
         switch ($menu->type) {
             case 'Route':
                 $url = route($menu->path);
