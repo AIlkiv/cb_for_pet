@@ -29,11 +29,11 @@
 
     <!-- load css -->
     <style type="text/css">
-        @if($style_css)
+        @if(!empty($style_css))
             {!! $style_css !!}
         @endif
     </style>
-    @if($load_css)
+    @if(!empty($load_css))
         @foreach($load_css as $css)
             <link href="{{$css}}" rel="stylesheet" type="text/css"/>
         @endforeach
