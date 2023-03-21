@@ -101,7 +101,7 @@
             @if($module)
                 <h1>
                     <!--Now you can define $page_icon alongside $page_tite for custom forms to follow CRUDBooster theme style -->
-                    <i class='{!! ($page_icon)?:$module->icon !!}'></i> {!! ($page_title)?:$module->name !!} &nbsp;&nbsp; 
+                    <i class='{!! ($page_icon)??$module->icon !!}'></i> {!! ($page_title)?:$module->name !!} &nbsp;&nbsp; 
 
                     <!--START BUTTON -->
 
@@ -203,14 +203,14 @@
 @include('crudbooster::admin_template_plugins')
 
 <!-- load js -->
-@if($load_js)
+@if(!empty($load_js))
     @foreach($load_js as $js)
         <script src="{{$js}}"></script>
     @endforeach
 @endif
 <script type="text/javascript">
     var site_url = "{{url('/')}}";
-    @if($script_js)
+    @if(!empty($script_js))
         {!! $script_js !!}
     @endif
 </script>

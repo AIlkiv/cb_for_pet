@@ -59,15 +59,15 @@
             <?php endif;?>
             <?php
             foreach ($columns as $col) {
-                if ($col['visible'] === FALSE) continue;
+                if (isset($col['visible']) && $col['visible'] === FALSE) continue;
 
                 $sort_column = Request::get('filter_column');
                 $colname = $col['label'];
                 $name = $col['name'];
                 $field = $col['field_with'];
-                $width = ($col['width']) ?: "auto";
-				$style = ($col['style']) ?: "";
-                $mainpath = trim(CRUDBooster::mainpath(), '/').$build_query;
+                $width = ($col['width']) ?? "auto";
+				$style = ($col['style']) ?? "";
+                $mainpath = trim(CRUDBooster::mainpath(), '/').($build_query ?? '');
                 echo "<th width='$width' $style>";
                 if (isset($sort_column[$field])) {
                     switch ($sort_column[$field]['sorting']) {
@@ -140,7 +140,7 @@
                     @endif
 
                     @foreach($hc as $j=>$h)
-                        <td {{ $columns[$j]['style'] or ''}}>{!! $h !!}</td>
+                        <td {{ $columns[$j]['style'] ?? ''}}>{!! $h !!}</td>
                     @endforeach
                 </tr>
                 @endforeach
@@ -159,10 +159,10 @@
 
             <?php
             foreach ($columns as $col) {
-                if ($col['visible'] === FALSE) continue;
+                if (isset($col['visible']) && $col['visible'] === FALSE) continue;
                 $colname = $col['label'];
-                $width = ($col['width']) ?: "auto";
-				$style = ($col['style']) ?: "";
+                $width = ($col['width']) ?? "auto";
+				$style = ($col['style']) ?? "";
                 echo "<th width='$width' $style>$colname</th>";
             }
             ?>
@@ -311,7 +311,7 @@ $total = $result->total();
                     <form method='get' action=''>
                         <div class="modal-body">
                             <?php foreach($columns as $key => $col):?>
-                            <?php if (isset($col['image']) || isset($col['download']) || $col['visible'] === FALSE) continue;?>
+                            <?php if (isset($col['image']) || isset($col['download']) || (isset($col['visible']) && $col['visible'] === FALSE)) continue;?>
 
                             <div class='form-group'>
 
@@ -467,7 +467,7 @@ $total = $result->total();
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>{{trans("crudbooster.export_dialog_filename")}}</label>
-                                <input type='text' name='filename' class='form-control' required value='Report {{ $module_name }} - {{date("d M Y")}}'/>
+                                <input type='text' name='filename' class='form-control' required value='Report {{ $module_name ?? '' }} - {{date("d M Y")}}'/>
                                 <div class='help-block'>
                                     {{trans("crudbooster.export_dialog_help_filename")}}
                                 </div>
@@ -505,17 +505,17 @@ $total = $result->total();
                                 <div class="form-group">
                                     <label>{{trans("crudbooster.export_dialog_page_size")}}</label>
                                     <select class='form-control' name='page_size'>
-                                        <option <?=($setting->default_paper_size == 'Letter') ? "selected" : ""?> value='Letter'>Letter</option>
-                                        <option <?=($setting->default_paper_size == 'Legal') ? "selected" : ""?> value='Legal'>Legal</option>
-                                        <option <?=($setting->default_paper_size == 'Ledger') ? "selected" : ""?> value='Ledger'>Ledger</option>
+                                        <option <?=(isset($setting) && $setting->default_paper_size == 'Letter') ? "selected" : ""?> value='Letter'>Letter</option>
+                                        <option <?=(isset($setting) && $setting->default_paper_size == 'Legal') ? "selected" : ""?> value='Legal'>Legal</option>
+                                        <option <?=(isset($setting) && $setting->default_paper_size == 'Ledger') ? "selected" : ""?> value='Ledger'>Ledger</option>
                                         <?php for($i = 0;$i <= 8;$i++):
-                                        $select = ($setting->default_paper_size == 'A'.$i) ? "selected" : "";
+                                        $select = (isset($setting) && $setting->default_paper_size == 'A'.$i) ? "selected" : "";
                                         ?>
                                         <option <?=$select?> value='A{{$i}}'>A{{$i}}</option>
                                         <?php endfor;?>
 
                                         <?php for($i = 0;$i <= 10;$i++):
-                                        $select = ($setting->default_paper_size == 'B'.$i) ? "selected" : "";
+                                        $select = (isset($setting) && $setting->default_paper_size == 'B'.$i) ? "selected" : "";
                                         ?>
                                         <option <?=$select?> value='B{{$i}}'>B{{$i}}</option>
                                         <?php endfor;?>

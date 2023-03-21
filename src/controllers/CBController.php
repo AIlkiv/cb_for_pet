@@ -229,7 +229,7 @@ class CBController extends Controller
                 $data['parent_field'] = CB::getTableForeignKey(g('parent_table'), $this->table);
             }
 
-            if ($parent_field) {
+            if (!empty($parent_field)) {
                 foreach ($this->columns_table as $i => $col) {
                     if ($col['name'] == $parent_field) {
                         unset($this->columns_table[$i]);
@@ -524,7 +524,7 @@ class CBController extends Controller
         }
 
         $mainpath = CRUDBooster::mainpath();
-        $orig_mainpath = $this->data['mainpath'];
+        $orig_mainpath = $this->data['mainpath'] ?? null;
         $title_field = $this->title_field;
         $html_contents = [];
         $page = (Request::get('page')) ? Request::get('page') : 1;
@@ -543,7 +543,7 @@ class CBController extends Controller
             }
 
             foreach ($columns_table as $col) {
-                if ($col['visible'] === false) {
+                if (isset($col['visible']) && $col['visible'] === false) {
                     continue;
                 }
 
@@ -569,16 +569,16 @@ class CBController extends Controller
                     }
                 }
 
-                if ($col['str_limit']) {
+                if (isset($col['str_limit'])) {
                     $value = trim(strip_tags($value));
                     $value = Str::limit($value, $col['str_limit']);
                 }
 
-                if ($col['nl2br']) {
+                if (isset($col['nl2br'])) {
                     $value = nl2br($value);
                 }
 
-                if ($col['callback_php']) {
+                if (isset($col['callback_php'])) {
                     foreach ($row as $k => $v) {
                         $col['callback_php'] = str_replace("[".$k."]", $v, $col['callback_php']);
                     }
@@ -609,7 +609,7 @@ class CBController extends Controller
             } //end foreach columns_table
 
             if ($this->button_table_action):
-
+                $parent_field = $parent_field ?? '';
                 $button_action_style = $this->button_action_style;
                 $html_content[] = "<div class='button_action' style='text-align:right'>".view('crudbooster::components.action', compact('addaction', 'row', 'button_action_style', 'parent_field'))->render()."</div>";
 

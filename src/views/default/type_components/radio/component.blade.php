@@ -37,7 +37,7 @@
 
         <?php
 
-        if (@$form['datatable']):
+        if (!empty($form['datatable'])):
             $datatable_array = explode(",", $form['datatable']);
             $datatable_tab = $datatable_array[0];
             $datatable_field = $datatable_array[1];
@@ -84,7 +84,7 @@
             }
 
         endif;
-        if ($form['dataquery']) {
+        if (!empty($form['dataquery'])) {
             $query = DB::select(DB::raw($form['dataquery']));
             if ($query) {
                 foreach ($query as $q) {
