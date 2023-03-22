@@ -12,9 +12,9 @@
         @if($form['datatable_ajax'] == true)
 
             <?php
-            $datatable = @$form['datatable'];
-            $where = @$form['datatable_where'];
-            $format = @$form['datatable_format'];
+            $datatable = $form['datatable'] ?? null;
+            $where = $form['datatable_where'] ?? null;
+            $format = $form['datatable_format'] ?? null;
 
             $raw = explode(',', $datatable);
             $url = CRUDBooster::mainpath("find-data");
@@ -127,7 +127,7 @@
     <div class="{{$col_width?:'col-sm-10'}}">
         <select style='width:100%' class='form-control' id="{{$name}}"
                 {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} name="{{$name}}{{($form['relationship_table'])?'[]':''}}" {{ ($form['relationship_table'])?'multiple="multiple"':'' }} >
-            @if($form['dataenum'])
+            @if(!empty($form['dataenum']))
                 <option value=''>{{trans('crudbooster.text_prefix_option')}} {{$form['label']}}</option>
                 <?php
                 $dataenum = $form['dataenum'];
@@ -150,12 +150,12 @@
                 @endforeach
             @endif
 
-            @if($form['datatable'])
-                @if($form['relationship_table'])
+            @if(!empty($form['datatable']))
+                @if(!empty($form['relationship_table']))
                     <?php
                     $select_table = explode(',', $form['datatable'])[0];
                     $select_title = explode(',', $form['datatable'])[1];
-                    $select_where = $form['datatable_where'];
+                    $select_where = $form['datatable_where'] ?? null;
                     $pk = CRUDBooster::findPrimaryKey($select_table);
 
                     $result = DB::table($select_table)->select($pk, $select_title);
@@ -164,7 +164,7 @@
                     }
                     $result = $result->orderby($select_title, 'asc')->get();
 
-                    if($form['datatable_orig'] != ''){
+                    if(!empty($form['datatable_orig'])){
                         $params = explode("|", $form['datatable_orig']);
                         if(!isset($params[2])) $params[2] = "id";
                         $value = DB::table($params[0])->where($params[2], $id)->first()->{$params[1]};
@@ -189,8 +189,8 @@
                         <?php
                         $select_table = explode(',', $form['datatable'])[0];
                         $select_title = explode(',', $form['datatable'])[1];
-                        $select_where = $form['datatable_where'];
-                        $datatable_format = $form['datatable_format'];
+                        $select_where = $form['datatable_where'] ?? null;
+                        $datatable_format = $form['datatable_format'] ?? null;
                         $select_table_pk = CRUDBooster::findPrimaryKey($select_table);
                         $result = DB::table($select_table)->select($select_table_pk, $select_title);
                         if ($datatable_format) {

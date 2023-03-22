@@ -44,7 +44,7 @@ class LogsController extends CBController
         $diff = self::getDiff($old_values, $new_values);
         $table = '<table class="table table-striped"><thead><tr><th>Key</th><th>Old Value</th><th>New Value</th></thead><tbody>';
         foreach ($diff as $key => $value) {
-            $table .= "<tr><td>$key</td><td>$old_values[$key]</td><td>$new_values[$key]</td></tr>";
+            $table .= "<tr><td>$key</td><td>".($old_values[$key] ?? '')."</td><td>".($new_values[$key] ?? '')."</td></tr>";
         }
         $table .= '</tbody></table>';
 

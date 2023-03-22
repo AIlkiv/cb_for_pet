@@ -377,12 +377,12 @@ class CBController extends Controller
         }
 
         if (Request::get('q')) {
-            $result->where(function ($w) use ($columns_table, $request) {
+            $result->where(function ($w) use ($columns_table) {
                 foreach ($columns_table as $col) {
                     if (! $col['field_with']) {
                         continue;
                     }
-                    if ($col['is_subquery']) {
+                    if (!empty($col['is_subquery'])) {
                         continue;
                     }
                     $w->orwhere($col['field_with'], "like", "%".Request::get("q")."%");
@@ -400,7 +400,7 @@ class CBController extends Controller
         if (Request::get('filter_column')) {
 
             $filter_column = Request::get('filter_column');
-            $result->where(function ($w) use ($filter_column, $fc) {
+            $result->where(function ($w) use ($filter_column) {
                 foreach ($filter_column as $key => $fc) {
 
                     $value = @$fc['value'];
@@ -569,16 +569,16 @@ class CBController extends Controller
                     }
                 }
 
-                if (isset($col['str_limit'])) {
+                if (!empty($col['str_limit'])) {
                     $value = trim(strip_tags($value));
                     $value = Str::limit($value, $col['str_limit']);
                 }
 
-                if (isset($col['nl2br'])) {
+                if (!empty($col['nl2br'])) {
                     $value = nl2br($value);
                 }
 
-                if (isset($col['callback_php'])) {
+                if (!empty($col['callback_php'])) {
                     foreach ($row as $k => $v) {
                         $col['callback_php'] = str_replace("[".$k."]", $v, $col['callback_php']);
                     }
@@ -1003,7 +1003,7 @@ class CBController extends Controller
                 continue;
             }
 
-            if ($ro['exception']) {
+            if (!empty($ro['exception'])) {
                 continue;
             }
 
@@ -1330,7 +1330,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'select2') {
-                if ($ro['relationship_table'] && $ro["datatable_orig"] == "") {
+                if ($ro['relationship_table'] && (!isset($ro["datatable_orig"]) || $ro["datatable_orig"] == "")) {
                     $datatable = explode(",", $ro['datatable'])[0];
 
                     $foreignKey2 = CRUDBooster::getForeignKey($datatable, $ro['relationship_table']);
@@ -1348,7 +1348,7 @@ class CBController extends Controller
                         }
                     }
                 }
-                if ($ro['relationship_table'] && $ro["datatable_orig"] != "") {
+                if ($ro['relationship_table'] && !empty($ro["datatable_orig"]) && $ro["datatable_orig"] != "") {
                     $params = explode("|", $ro['datatable_orig']);
                     if(!isset($params[2])) $params[2] = "id";
                     DB::table($params[0])->where($params[2], $id)->update([$params[1] => implode(",",$inputdata)]);
@@ -1394,7 +1394,7 @@ class CBController extends Controller
         //insert log
         $old_values = json_decode(json_encode($row), true);
         CRUDBooster::insertLog(trans("crudbooster.log_update", [
-            'name' => $this->arr[$this->title_field],
+            'name' => $this->arr[$this->title_field] ?? null,
             'module' => CRUDBooster::getCurrentModule()->name,
         ]), LogsController::displayDiff($old_values, $this->arr));
 
