@@ -42,7 +42,9 @@
     try {
         $sessions = Session::all();
         foreach ($sessions as $key => $val) {
-            $value = str_replace("[".$key."]", $val, $value);
+            if (is_string($val)) {
+                $value = str_replace("[".$key."]", $val, $value);
+            }
         }
         $sql = DB::select(DB::raw($value));
     } catch (\Exception $e) {

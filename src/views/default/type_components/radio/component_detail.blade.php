@@ -20,7 +20,7 @@ if ($form['datatable'] && $form['relationship_table']) {
     } else {
         $value = [];
     }
-} elseif ($form['dataquery']) {
+} elseif (!empty($form['dataquery'])) {
     $dataquery = $form['dataquery'];
     $query = DB::select(DB::raw($dataquery));
     if ($query) {

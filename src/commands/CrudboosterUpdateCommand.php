@@ -48,7 +48,7 @@ class CrudboosterUpdateCommand extends Command
         $this->call('vendor:publish', ['--tag' => 'cb_localization', '--force' => true]);
 
         $configLFM = config_path('lfm.php');
-        $configLFM = file_get_contents($configLFM);
+        $configLFM = file_get_contents($configLFM) ?: '';
         $configLFMModified = str_replace("['web','auth']", "['web','\crocodicstudio\crudbooster\middlewares\CBBackend']", $configLFM);
         $configLFMModified = str_replace('Unisharp\Laravelfilemanager\Handlers\ConfigHandler::class', 'function() {return Session::get("admin_id");}', $configLFMModified);
         $configLFMModified = str_replace('auth()->user()->id', 'Session::get("admin_id")', $configLFMModified);

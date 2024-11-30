@@ -35,6 +35,7 @@ class Mailqueues extends Command
 
         $this->comment('Mail Queues Started '.$now);
 
+        /* @phpstan-ignore variable.undefined */
         $queues = DB::table('cms_email_queues')->where('send_at', '<=', $now)->take($limit_an_hour)->get();
 
         $this->comment('Total Queues : '.count($queues));
@@ -44,7 +45,7 @@ class Mailqueues extends Command
 
         foreach ($queues as $q) {
             if (filter_var($q->email_recipient, FILTER_VALIDATE_EMAIL) !== false) {
-                CRUDBooster::sendEmailQueue($queue);
+                CRUDBooster::sendEmailQueue($q);
                 $this->comment('Email send -> '.$q->subject);
             }
             DB::table('mailqueues')->where('id', $q->id)->delete();

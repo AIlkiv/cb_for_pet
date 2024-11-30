@@ -36,9 +36,9 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
                                             <div class="col-sm-10">
                                                 @if($col['type']=='text')
                                                     <input id='{{$name_column}}' type='text'
-                                                           {{ ($col['max'])?"maxlength='".$col['max']."'":"" }} name='child-{{$col["name"]}}'
-                                                           class='form-control {{$col['required']?"required":""}}'
-                                                            {{($col['readonly']===true)?"readonly":""}}
+                                                           {{ isset($col['max'])?"maxlength='".$col['max']."'":"" }} name='child-{{$col["name"]}}'
+                                                           class='form-control {{ !empty($col['required'])?"required":""}}'
+                                                            {{ (($col['readonly']??false)===true)?"readonly":"" }}
                                                     />
                                                 @elseif($col['type']=='radio')
                                                     <?php
@@ -131,9 +131,9 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
 
                                                 @elseif($col['type']=='number')
                                                     <input id='{{$name_column}}' type='number'
-                                                           {{ ($col['min'])?"min='".$col['min']."'":"" }} {{ ($col['max'])?"max='$col[max]'":"" }} name='child-{{$col["name"]}}'
+                                                           {{ isset($col['min'])?"min='".$col['min']."'":"" }} {{ !empty($col['max'])?"max='$col[max]'":"" }} name='child-{{$col["name"]}}'
                                                            class='form-control {{$col['required']?"required":""}}'
-                                                            {{($col['readonly']===true)?"readonly":""}}
+                                                            {{(($col['readonly']??false)===true)?"readonly":""}}
                                                     />
                                                 @elseif($col['type']=='textarea')
                                                     <textarea id='{{$name_column}}' name='child-{{$col["name"]}}'
@@ -172,7 +172,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
 
                                                             // Grab the files and set them to our variable
                                                             function prepareUpload{{$name_column}}(event) {
-                                                                var max_size = {{ ($col['max'])?:2000 }};
+                                                                var max_size = {{ ($col['max'])??2000 }};
                                                                 file = event.target.files[0];
 
                                                                 var filesize = Math.round(parseInt(file.size) / 1024);
@@ -339,7 +339,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
                                                            value="{{$col["value"]}}">
                                                 @endif
 
-                                                @if($col['help'])
+                                                @if(!empty($col['help']))
                                                     <div class='help-block'>
                                                         {{$col['help']}}
                                                     </div>
@@ -347,7 +347,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
                                             </div>
                                         </div>
 
-                                        @if($col['formula'])
+                                        @if(!empty($col['formula']))
                                             <?php
                                             $formula = $col['formula'];
                                             $formula_function_name = 'formula'.\Illuminate\Support\Str::slug($name.$col['name'], '');

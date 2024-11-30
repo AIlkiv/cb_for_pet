@@ -36,7 +36,7 @@ class AdminController extends CBController
         $password = Request::input('password');
         $users = DB::table(config('crudbooster.USER_TABLE'))->where('id', $id)->first();
 
-        if (\Hash::check($password, $users->password)) {
+        if (!is_null($users) && \Hash::check($password, $users->password)) {
             Session::put('admin_lock', 0);
 
             return redirect(CRUDBooster::adminPath());

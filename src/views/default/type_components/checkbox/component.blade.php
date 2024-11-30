@@ -93,7 +93,7 @@
             }
 
         endif;
-        if ($form['dataquery']) {
+        if (!empty($form['dataquery'])) {
 
             $query = DB::select(DB::raw($form['dataquery']));
             @$value = explode(';', $value);

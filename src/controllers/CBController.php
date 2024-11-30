@@ -929,8 +929,8 @@ class CBController extends Controller
                         if (substr($validationItem, 0, 6) == 'unique') {
                             $parseUnique = explode(',', str_replace('unique:', '', $validationItem));
                             $uniqueTable = ($parseUnique[0]) ?: $this->table;
-                            $uniqueColumn = ($parseUnique[1]) ?: $name;
-                            $uniqueIgnoreId = ($parseUnique[2]) ?: (($id) ?: '');
+                            $uniqueColumn = ($parseUnique[1]) ?? $name;
+                            $uniqueIgnoreId = ($parseUnique[2]) ?? (($id) ?? '');
 
                             //Make sure table name
                             $uniqueTable = CB::parseSqlTable($uniqueTable)['table'];
@@ -1017,11 +1017,11 @@ class CBController extends Controller
                 }
             }
 
-            if ($ro['type'] == 'checkbox' && $ro['relationship_table']) {
+            if ($ro['type'] == 'checkbox' && !empty($ro['relationship_table'])) {
                 continue;
             }
 
-            if ($ro['type'] == 'select2' && $ro['relationship_table']) {
+            if ($ro['type'] == 'select2' && !empty($ro['relationship_table'])) {
                 continue;
             }
 
@@ -1059,7 +1059,7 @@ class CBController extends Controller
             if ($ro['type'] == 'checkbox') {
 
                 if (is_array($inputdata)) {
-                    if ($ro['datatable'] != '') {
+                    if (!empty($ro['datatable'])) {
                         $table_checkbox = explode(',', $ro['datatable'])[0];
                         $field_checkbox = explode(',', $ro['datatable'])[1];
                         $table_checkbox_pk = CB::pk($table_checkbox);
@@ -1170,7 +1170,7 @@ class CBController extends Controller
 
             //Insert Data Checkbox if Type Datatable
             if ($ro['type'] == 'checkbox') {
-                if ($ro['relationship_table']) {
+                if (!empty($ro['relationship_table'])) {
                     $datatable = explode(",", $ro['datatable'])[0];
                     $foreignKey2 = CRUDBooster::getForeignKey($datatable, $ro['relationship_table']);
                     $foreignKey = CRUDBooster::getForeignKey($this->table, $ro['relationship_table']);
@@ -1190,7 +1190,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'select2') {
-                if ($ro['relationship_table']) {
+                if (!empty($ro['relationship_table'])) {
                     $datatable = explode(",", $ro['datatable'])[0];
                     $foreignKey2 = CRUDBooster::getForeignKey($datatable, $ro['relationship_table']);
                     $foreignKey = CRUDBooster::getForeignKey($this->table, $ro['relationship_table']);
@@ -1309,7 +1309,7 @@ class CBController extends Controller
 
             //Insert Data Checkbox if Type Datatable
             if ($ro['type'] == 'checkbox') {
-                if ($ro['relationship_table']) {
+                if (!empty($ro['relationship_table'])) {
                     $datatable = explode(",", $ro['datatable'])[0];
 
                     $foreignKey2 = CRUDBooster::getForeignKey($datatable, $ro['relationship_table']);
@@ -1330,7 +1330,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'select2') {
-                if ($ro['relationship_table'] && (!isset($ro["datatable_orig"]) || $ro["datatable_orig"] == "")) {
+                if (!empty($ro['relationship_table']) && (!isset($ro["datatable_orig"]) || $ro["datatable_orig"] == "")) {
                     $datatable = explode(",", $ro['datatable'])[0];
 
                     $foreignKey2 = CRUDBooster::getForeignKey($datatable, $ro['relationship_table']);
@@ -1348,7 +1348,7 @@ class CBController extends Controller
                         }
                     }
                 }
-                if ($ro['relationship_table'] && !empty($ro["datatable_orig"]) && $ro["datatable_orig"] != "") {
+                if (!empty($ro['relationship_table']) && !empty($ro["datatable_orig"]) && $ro["datatable_orig"] != "") {
                     $params = explode("|", $ro['datatable_orig']);
                     if(!isset($params[2])) $params[2] = "id";
                     DB::table($params[0])->where($params[2], $id)->update([$params[1] => implode(",",$inputdata)]);

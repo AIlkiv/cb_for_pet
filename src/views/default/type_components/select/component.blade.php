@@ -70,7 +70,7 @@
             <option value=''>{{$default}}</option>
             <?php
             if (! $form['parent_select']) {
-                if (@$form['dataquery']):
+                if (!empty($form['dataquery'])):
 
                     $query = DB::select(DB::raw($form['dataquery']));
                     if ($query) {

@@ -5,7 +5,7 @@ if ($form['datatable']) {
     $field = $datatable[1];
     echo CRUDBooster::first($table, ['id' => $value])->$field;
 }
-if ($form['dataquery']) {
+if (!empty($form['dataquery'])) {
     $dataquery = $form['dataquery'];
     $query = DB::select(DB::raw($dataquery));
     if ($query) {

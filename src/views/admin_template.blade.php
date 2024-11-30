@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ ($page_title)?Session::get('appname').': '.strip_tags($page_title):"Admin Area" }}</title>
+    <title>{{ !empty($page_title)?Session::get('appname').': '.strip_tags($page_title):"Admin Area" }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name='generator' content='CRUDBooster 5.4.6'/>
     <meta name='robots' content='noindex,nofollow'/>
@@ -101,7 +101,7 @@
             @if($module)
                 <h1>
                     <!--Now you can define $page_icon alongside $page_tite for custom forms to follow CRUDBooster theme style -->
-                    <i class='{!! ($page_icon)??$module->icon !!}'></i> {!! ($page_title)?:$module->name !!} &nbsp;&nbsp; 
+                    <i class='{!! ($page_icon)??$module->icon??'' !!}'></i> {!! !empty($page_title)?$page_title:($module->name ?? '') !!} &nbsp;&nbsp; 
 
                     <!--START BUTTON -->
 
@@ -140,14 +140,14 @@
                     @if(!empty($index_button))
 
                         @foreach($index_button as $ib)
-                            <a href='{{$ib["url"]}}' id='{{\Illuminate\Support\Str::slug($ib["label"])}}' class='btn {{($ib['color'])?'btn-'.$ib['color']:'btn-primary'}} btn-sm'
-                               @if($ib['onClick']) onClick='return {{$ib["onClick"]}}' @endif
-                               @if($ib['onMouseOver']) onMouseOver='return {{$ib["onMouseOver"]}}' @endif
-                               @if($ib['onMouseOut']) onMouseOut='return {{$ib["onMouseOut"]}}' @endif
-                               @if($ib['onKeyDown']) onKeyDown='return {{$ib["onKeyDown"]}}' @endif
-                               @if($ib['onLoad']) onLoad='return {{$ib["onLoad"]}}' @endif
+                            <a href='{{$ib["url"]}}' id='{{\Illuminate\Support\Str::slug($ib["label"])}}' class='btn {{!empty($ib['color'])?'btn-'.$ib['color']:'btn-primary'}} btn-sm'
+                               @if(!empty($ib['onClick'])) onClick='return {{$ib["onClick"]}}' @endif
+                               @if(!empty($ib['onMouseOver'])) onMouseOver='return {{$ib["onMouseOver"]}}' @endif
+                               @if(!empty($ib['onMouseOut'])) onMouseOut='return {{$ib["onMouseOut"]}}' @endif
+                               @if(!empty($ib['onKeyDown'])) onKeyDown='return {{$ib["onKeyDown"]}}' @endif
+                               @if(!empty($ib['onLoad'])) onLoad='return {{$ib["onLoad"]}}' @endif
                             >
-                                <i class='{{$ib["icon"]}}'></i> {{$ib["label"]}}
+                                <i class='{{$ib["icon"] ?? ""}}'></i> {{$ib["label"]}}
                             </a>
                     @endforeach
                 @endif
@@ -157,7 +157,7 @@
 
                 <ol class="breadcrumb">
                     <li><a href="{{CRUDBooster::adminPath()}}"><i class="fa fa-dashboard"></i> {{ trans('crudbooster.home') }}</a></li>
-                    <li class="active">{{$module->name}}</li>
+                    <li class="active">{{$module->name ?? ''}}</li>
                 </ol>
             @else
                 <h1>{{Session::get('appname')}}

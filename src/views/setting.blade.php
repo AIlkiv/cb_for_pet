@@ -53,19 +53,19 @@
 
     <div style="width:750px;margin:0 auto ">
 
-        <p align="right"><a title='Add Field Setting' class='btn btn-sm btn-primary' href='{{route("SettingsControllerGetAdd")."?group_setting=".$page_title}}'><i
+        <p align="right"><a title='Add Field Setting' class='btn btn-sm btn-primary' href='{{route("SettingsControllerGetAdd")."?group_setting=".($page_title ?? "")}}'><i
                         class='fa fa-plus'></i> Add Field Setting</a></p>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class='fa fa-cog'></i> {{$page_title}}
+                <i class='fa fa-cog'></i> {{$page_title ?? ''}}
             </div>
             <div class="panel-body">
-                <form method='post' id="form" enctype="multipart/form-data" action='{{CRUDBooster::mainpath("save-setting?group_setting=$page_title")}}'>
+                <form method='post' id="form" enctype="multipart/form-data" action='{{CRUDBooster::mainpath("save-setting?group_setting=".($page_title ?? ""))}}'>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="box-body">
                         <?php
-                        $set = DB::table('cms_settings')->where('group_setting', $page_title)->get();
+                        $set = DB::table('cms_settings')->where('group_setting', $page_title ?? '')->get();
                         foreach($set as $s):
 
                         $value = $s->content;
