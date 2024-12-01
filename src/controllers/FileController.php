@@ -1,16 +1,16 @@
 <?php namespace crocodicstudio\crudbooster\controllers;
 
 use File;
-use Image;
 use Request;
 use Response;
 use Storage;
+
+use crocodicstudio\crudbooster\helpers\ImageCache;
 
 class FileController extends Controller
 {
     public function getPreview($one, $two = null, $three = null, $four = null, $five = null)
     {
-
         if ($two) {
             $fullFilePath = 'uploads'.DIRECTORY_SEPARATOR.$one.DIRECTORY_SEPARATOR.$two;
             $filename = $two;
@@ -57,7 +57,7 @@ class FileController extends Controller
                 $h = Request::get('h') ?: $w;
             }
 
-            $imgRaw = Image::cache(function ($image) use ($fullStoragePath, $w, $h) {
+            $imgRaw = ImageCache::cache(implode('|', [$fullStoragePath, $w, $h]), function ($image) use ($fullStoragePath, $w, $h) {
                 $im = $image->make($fullStoragePath);
                 if ($w) {
                     if (! $h) {
