@@ -65,7 +65,7 @@
             }
 
             try {
-                $query = DB::select(DB::raw($sql));
+                $query = DB::select($sql);
                 foreach ($query as $r) {
                     $datax[] = $r->label;
                     $datamerger[] = $r->value;
@@ -114,7 +114,7 @@
                     labels: {!! json_encode($area_name) !!},
                     resize: true,
                     parseTime: false,
-                    @if($config->goals)
+                    @if(!empty($config->goals))
                     goals: [{{$config->goals}}],
                     @endif
                     behaveLikeLine: true,

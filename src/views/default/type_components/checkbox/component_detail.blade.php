@@ -1,6 +1,6 @@
 <?php
 
-if ($form['datatable'] && $form['relationship_table']) {
+if (!empty($form['datatable']) && !empty($form['relationship_table'])) {
     $datatable_array = explode(",", $form['datatable']);
     $datatable_tab = $datatable_array[0];
     $datatable_field = $datatable_array[1];
@@ -11,7 +11,7 @@ if ($form['datatable'] && $form['relationship_table']) {
     $value = DB::table($datatable_tab)->select($datatable_field)->whereIn('id', $ids)->pluck($datatable_field)->toArray();
 } elseif (!empty($form['dataquery'])) {
     $dataquery = $form['dataquery'];
-    $query = DB::select(DB::raw($dataquery));
+    $query = DB::select($dataquery);
     if ($query) {
         foreach ($query as $q) {
             if ($q->value == $value) {

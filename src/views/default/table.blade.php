@@ -51,10 +51,10 @@
     <table id='table_dashboard' class="table table-hover table-striped table-bordered">
         <thead>
         <tr class="active">
-            <?php if($button_bulk_action):?>
+            <?php if(!empty($button_bulk_action)):?>
             <th width='3%'><input type='checkbox' id='checkall'/></th>
             <?php endif;?>
-            <?php if($show_numbering):?>
+            <?php if(!empty($show_numbering)):?>
             <th width="1%">{{ trans('crudbooster.no') }}</th>
             <?php endif;?>
             <?php
@@ -93,7 +93,7 @@
             }
             ?>
 
-            @if($button_table_action)
+            @if(!empty($button_table_action))
                 @if(CRUDBooster::isUpdate() || CRUDBooster::isDelete() || CRUDBooster::isRead())
                     <th width='{{$button_action_width?:"auto"}}' style="text-align:right">{{trans("crudbooster.action_label")}}</th>
                 @endif
@@ -103,9 +103,9 @@
         <tbody>
         @if(count($result)==0)
             <tr class='warning'>
-                <?php if($button_bulk_action && $show_numbering):?>
+                <?php if(!empty($button_bulk_action) && !empty($show_numbering)):?>
                 <td colspan='{{count($columns)+3}}' align="center">
-                <?php elseif( ($button_bulk_action && ! $show_numbering) || (! $button_bulk_action && $show_numbering) ):?>
+                <?php elseif( (!empty($button_bulk_action) && empty($show_numbering)) || (empty($button_bulk_action) && !empty($show_numbering)) ):?>
                 <td colspan='{{count($columns)+2}}' align="center">
                 <?php else:?>
                 <td colspan='{{count($columns)+1}}' align="center">
@@ -118,7 +118,7 @@
 
         @foreach($html_contents['html'] as $i=>$hc)
 
-            @if($table_row_color)
+            @if(!empty($table_row_color))
                 <?php $tr_color = NULL;?>
                 @foreach($table_row_color as $trc)
                     <?php
@@ -149,11 +149,11 @@
 
         <tfoot>
         <tr>
-            <?php if($button_bulk_action):?>
+            <?php if(!empty($button_bulk_action)):?>
             <th>&nbsp;</th>
             <?php endif;?>
 
-            <?php if($show_numbering):?>
+            <?php if(!empty($show_numbering)):?>
             <th>&nbsp;</th>
             <?php endif;?>
 
@@ -167,7 +167,7 @@
             }
             ?>
 
-            @if($button_table_action)
+            @if(!empty($button_table_action))
                 @if(CRUDBooster::isUpdate() || CRUDBooster::isDelete() || CRUDBooster::isRead())
                     <th> -</th>
                 @endif
@@ -187,7 +187,7 @@ $total = $result->total();
 <div class="col-md-4" style="margin:30px 0;"><span class="pull-right">{{ trans("crudbooster.filter_rows_total") }}
         : {{ $from }} {{ trans("crudbooster.filter_rows_to") }} {{ $to }} {{ trans("crudbooster.filter_rows_of") }} {{ $total }}</span></div>
 
-@if($columns)
+@if(!empty($columns))
     @push('bottom')
         <script>
             $(function () {

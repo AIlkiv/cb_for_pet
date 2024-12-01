@@ -20,7 +20,8 @@
 
             <div class="panel-body" style="padding:20px 0px 0px 0px">
                 <?php
-                $action = (@$row) ? CRUDBooster::mainpath("edit-save/$row->id") : CRUDBooster::mainpath("add-save");
+
+                $action = !empty($id) ? CRUDBooster::mainpath("edit-save/$id") : CRUDBooster::mainpath("add-save");
                 $return_url = ($return_url) ?? g('return_url');
                 ?>
                 <form class='form-horizontal' method='post' id="form" enctype="multipart/form-data" action='{{$action}}'>
@@ -28,7 +29,7 @@
                     <input type='hidden' name='return_url' value='{{ @$return_url }}'/>
                     <input type='hidden' name='ref_mainpath' value='{{ CRUDBooster::mainpath() }}'/>
                     <input type='hidden' name='ref_parameter' value='{{urldecode(http_build_query(@$_GET))}}'/>
-                    @if($hide_form)
+                    @if(!empty($hide_form))
                         <input type="hidden" name="hide_form" value='{!! serialize($hide_form) !!}'>
                     @endif
                     <div class="box-body" id="parent-form-area">
@@ -45,7 +46,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2"></label>
                             <div class="col-sm-10">
-                                @if($button_cancel && CRUDBooster::getCurrentMethod() != 'getDetail')
+                                @if(!empty($button_cancel) && CRUDBooster::getCurrentMethod() != 'getDetail')
                                     @if(g('return_url'))
                                         <a href='{{g("return_url")}}' class='btn btn-default'><i
                                                     class='fa fa-chevron-circle-left'></i> {{trans("crudbooster.button_back")}}</a>
@@ -60,7 +61,7 @@
                                         <input type="submit" name="submit" value='{{trans("crudbooster.button_save_more")}}' class='btn btn-success'>
                                     @endif
 
-                                    @if($button_save && $command != 'detail')
+                                    @if(!empty($button_save) && $command != 'detail')
                                         <input type="submit" name="submit" value='{{trans("crudbooster.button_save")}}' class='btn btn-success'>
                                     @endif
 

@@ -39,7 +39,7 @@
     @endpush
 
     <ul class="nav nav-tabs">
-        @if($id)
+        @if(!empty($id))
             <li role="presentation" class="active"><a href="{{Route('ModulsControllerGetStep1',['id'=>$id])}}"><i class='fa fa-info'></i> Step 1 - Module
                     Information</a></li>
             <li role="presentation"><a href="{{Route('ModulsControllerGetStep2',['id'=>$id])}}"><i class='fa fa-table'></i> Step 2 - Table Display</a></li>

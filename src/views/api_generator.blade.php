@@ -264,7 +264,7 @@
                     }
 
                     function init_data_parameters() {
-                                @if($parameters)
+                                @if(!empty($parameters))
 
                         var resp = {!!$parameters!!};
                         var tipe_action = $('#tipe_action').val();
@@ -348,7 +348,7 @@
 
 
                     function init_data_responses() {
-                                @if($responses)
+                                @if(!empty($responses))
 
                         var t = $('#combo_tabel').val();
                         var type = 'list';
@@ -440,7 +440,7 @@
 
                     $(function () {
 
-                        @if($row)
+                        @if(!empty($row))
                         init_data_parameters();
                         init_data_responses();
                         @endif

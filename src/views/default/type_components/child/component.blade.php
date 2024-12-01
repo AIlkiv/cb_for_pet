@@ -10,7 +10,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
 @endpush
 <div class='form-group {{$header_group_class}}' id='form-group-{{$name}}'>
 
-    @if($form['columns'])
+    @if(!empty($form['columns']))
         <div class="col-sm-12">
 
             <div id='panel-form-{{$name}}' class="panel panel-default">
@@ -42,7 +42,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
                                                     />
                                                 @elseif($col['type']=='radio')
                                                     <?php
-                                                    if($col['dataenum']):
+                                                    if(!empty($col['dataenum'])):
                                                     $dataenum = $col['dataenum'];
                                                     if (strpos($dataenum, ';') !== false) {
                                                         $dataenum = explode(";", $dataenum);
@@ -258,7 +258,7 @@ $name = \Illuminate\Support\Str::slug($form['label'], '');
 
                                                 @elseif($col['type']=='select')
 
-                                                    @if($col['parent_select'])
+                                                    @if(!empty($col['parent_select']))
                                                         @push('bottom')
                                                             <script type="text/javascript">
                                                                 $(function () {

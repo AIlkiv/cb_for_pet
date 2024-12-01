@@ -1,6 +1,6 @@
 <div class='form-group {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style='{{@$form["style"]}}'>
     <label class='control-label col-sm-2'>{{$form['label']}}
-        @if($required)
+        @if(!empty($required))
             <span class='text-danger' title='{!! trans('crudbooster.this_field_is_required') !!}'>*</span>
         @endif
     </label>
@@ -23,10 +23,10 @@
             </div>
         @endif
 
-        @if($value)
+        @if(!empty($value))
             <input id="thumbnail-{{$name}}" class="form-control" type="hidden" value='{{$value}}' name="{{$name}}">
             @if(@$form['filemanager_type'] == 'file')
-                @if($value)
+                @if(!empty($value))
                     <div style='margin-top:15px'><a id='holder-{{$name}}' href='{{asset($value)}}' target='_blank'
                                                     title=' {{trans("crudbooster.button_download_file")}} {{ basename($value)}}'><i
                                     class='fa fa-download'></i> {{trans("crudbooster.button_download_file")}}  {{ basename($value)}}</a>

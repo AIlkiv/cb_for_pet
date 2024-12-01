@@ -46,13 +46,13 @@
                 $value = str_replace("[".$key."]", $val, $value);
             }
         }
-        $sql = DB::select(DB::raw($value));
+        $sql = DB::select($value);
     } catch (\Exception $e) {
         die('ERROR');
     }
     ?>
 
-    @if($sql)
+    @if(!empty($sql))
         <table class='table table-striped'>
             <thead>
             <tr>

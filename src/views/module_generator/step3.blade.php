@@ -476,22 +476,22 @@
                                     $types = file_get_contents($types);
                                     $types = json_decode($types);
 
-                                    if($types):
+                                    if(!empty($types)):
                                     ?>
 
-                                    @if($types->alert)
+                                    @if(!empty($types->alert))
                                         <div class="alert alert-warning">
                                             {!! $types->alert !!}
                                         </div>
                                     @endif
 
                                     <?php
-                                    if($types->attribute->required):
+                                    if(!empty($types->attribute->required)):
                                     foreach($types->attribute->required as $key=>$val):
                                     @$value = $form[$key];
                                     if(is_object($val)):
 
-                                    if($val->type && $val->type == 'radio'):
+                                    if(!empty($val->type) && $val->type == 'radio'):
                                     ?>
                                     <div class="form-group">
                                         <label>{{$key}}</label>
@@ -523,7 +523,7 @@
 
 
                                     <?php
-                                    if($types->attribute->requiredOne):
+                                    if(!empty($types->attribute->requiredOne)):
                                     foreach($types->attribute->requiredOne as $key=>$val):
                                     @$value = $form[$key];
                                     ?>
@@ -534,7 +534,7 @@
                                     <?php endforeach; endif;?>
 
                                     <?php
-                                    if($types->attribute->optional):
+                                    if(!empty($types->attribute->optional)):
                                     foreach($types->attribute->optional as $key=>$val):
                                     @$value = $form[$key];
 

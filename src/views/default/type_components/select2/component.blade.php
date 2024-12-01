@@ -1,6 +1,6 @@
-@if($form['datatable'])
+@if(!empty($form['datatable']))
 
-    @if($form['relationship_table'])
+    @if(!empty($form['relationship_table']))
         @push('bottom')
             <script type="text/javascript">
                 $(function () {
@@ -65,7 +65,7 @@
                                 return markup;
                             },
                             minimumInputLength: 1,
-                            @if($value)
+                            @if(!empty($value))
                             initSelection: function (element, callback) {
                                 var id = $(element).val() ? $(element).val() : "{{$value}}";
                                 if (id !== '') {
@@ -119,14 +119,14 @@
 
 <div class='form-group {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
     <label class='control-label col-sm-2'>{{$form['label']}}
-        @if($required)
+        @if(!empty($required))
             <span class='text-danger' title='{!! trans('crudbooster.this_field_is_required') !!}'>*</span>
         @endif
     </label>
 
     <div class="{{$col_width?:'col-sm-10'}}">
         <select style='width:100%' class='form-control' id="{{$name}}"
-                {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} name="{{$name}}{{($form['relationship_table'])?'[]':''}}" {{ ($form['relationship_table'])?'multiple="multiple"':'' }} >
+                {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} name="{{$name}}{{!empty($form['relationship_table'])?'[]':''}}" {{ !empty($form['relationship_table'])?'multiple="multiple"':'' }} >
             @if(!empty($form['dataenum']))
                 <option value=''>{{trans('crudbooster.text_prefix_option')}} {{$form['label']}}</option>
                 <?php

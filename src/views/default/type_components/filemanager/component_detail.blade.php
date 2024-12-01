@@ -1,4 +1,4 @@
-@if($value)
+@if(!empty($value))
     @if($form['filemanager_type'] == 'file')
         <a target="_blank" href="{{asset($value)}}">
             {{ basename($value) }}

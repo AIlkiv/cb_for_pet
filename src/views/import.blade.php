@@ -2,7 +2,7 @@
 @section('content')
 
 
-    @if($button_show_data || $button_reload_data || $button_new_data || $button_delete_data || $index_button || $columns)
+    @if(!empty($button_show_data) || !empty($button_reload_data) || !empty($button_new_data) || !empty($button_delete_data) || !empty($index_button) || !empty($columns))
         <div id='box-actionmenu' class='box'>
             <div class='box-body'>
                 @include("crudbooster::default.actionmenu")

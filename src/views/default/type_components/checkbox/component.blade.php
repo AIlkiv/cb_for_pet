@@ -1,12 +1,12 @@
 <div class='form-group {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
     <label class='control-label col-sm-2'>{{$form['label']}}
-        @if($required)
+        @if(!empty($required))
             <span class='text-danger' title='{!! trans('crudbooster.this_field_is_required') !!}'>*</span>
         @endif
     </label>
     <div class="{{$col_width?:'col-sm-10'}}">
 
-        @if($form['dataenum']!='')
+        @if(!empty($form['dataenum']))
             <?php
             @$value = explode(";", $value);
             @array_walk($value, 'trim');
@@ -59,7 +59,7 @@
 
             $selects_data = $selects_data->orderby($datatable_field, "asc")->get();
 
-            if ($form['relationship_table']) {
+            if (!empty($form['relationship_table'])) {
                 $foreignKey = CRUDBooster::getForeignKey($table, $form['relationship_table']);
                 $foreignKey2 = CRUDBooster::getForeignKey($datatable_tab, $form['relationship_table']);
 
@@ -95,7 +95,7 @@
         endif;
         if (!empty($form['dataquery'])) {
 
-            $query = DB::select(DB::raw($form['dataquery']));
+            $query = DB::select($form['dataquery']);
             @$value = explode(';', $value);
             if ($query) {
                 foreach ($query as $q) {

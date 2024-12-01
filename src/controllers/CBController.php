@@ -1093,7 +1093,7 @@ class CBController extends Controller
             }
 
             if ($ro['type'] == 'select' || $ro['type'] == 'select2') {
-                if ($ro['datatable']) {
+                if (!empty($ro['datatable'])) {
                     if ($inputdata == '') {
                         $this->arr[$name] = 0;
                     }
@@ -1156,8 +1156,9 @@ class CBController extends Controller
         $lastInsertId = $id = DB::table($this->table)->insertGetId($this->arr);
         
         //fix bug if primary key is uuid
-        if($this->arr[$this->primary_key]!=$id)
-            $id = $this->arr[$this->primary_key];
+        if(($this->arr[$this->primary_key] ?? null) != $id) {
+            $id = $this->arr[$this->primary_key] ?? null;
+        }
         
         //Looping Data Input Again After Insert
         foreach ($this->data_inputan as $ro) {

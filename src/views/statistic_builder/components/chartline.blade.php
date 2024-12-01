@@ -65,7 +65,7 @@
             }
 
             try {
-                $query = DB::select(DB::raw($sql));
+                $query = DB::select($sql);
                 foreach ($query as $r) {
                     $datax[] = $r->label;
                     $datamerger[] = $r->value;
