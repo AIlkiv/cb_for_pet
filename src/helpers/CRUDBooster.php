@@ -47,7 +47,7 @@ class CRUDBooster
 		Storage::makeDirectory($filePath);
 		$filename = md5(str_random(5)).'.'.$mime_type;
 		if (Storage::put($filePath.'/'.$filename, $filedata)) {
-		    self::resizeImage($filePath.'/'.$filename);
+		    self::resizeImage($filePath.'/'.$filename, $mime_type);
 
 		    return $filePath.'/'.$filename;
 		}
@@ -83,7 +83,7 @@ class CRUDBooster
             }
 
             if (Storage::putFileAs($file_path, $file, $filename)) {
-                self::resizeImage($file_path.'/'.$filename, $resize_width, $resize_height);
+                self::resizeImage($file_path.'/'.$filename, $ext, $resize_width, $resize_height);
 
                 return $file_path.'/'.$filename;
             } else {
@@ -94,7 +94,7 @@ class CRUDBooster
         }
     }
 
-    private static function resizeImage($fullFilePath, $resize_width = null, $resize_height = null, $qty = 100, $thumbQty = 75)
+    private static function resizeImage($fullFilePath, $ext, $resize_width = null, $resize_height = null, $qty = 100, $thumbQty = 75)
     {
         $images_ext = config('crudbooster.IMAGE_EXTENSIONS', 'jpg,png,gif,bmp');
         $images_ext = explode(',', $images_ext);

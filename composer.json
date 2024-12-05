@@ -20,7 +20,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php":">=8.2",
+        "php":">=8.0",
         "barryvdh/laravel-dompdf": "^2.0",
         "doctrine/dbal": "^3.0",
         "maatwebsite/excel": "~3.1",

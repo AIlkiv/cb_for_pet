@@ -69,7 +69,6 @@ class FileController extends Controller
 
                 return $im;
             });
-
             $imageFileSize = mb_strlen($imgRaw, '8bit') ?: 0;
         }
 

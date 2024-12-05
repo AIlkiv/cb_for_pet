@@ -1,5 +1,8 @@
 <?php
 
+namespace crocodicstudio\crudbooster\helpers;
+
+use Config;
 use Intervention\Image\ImageManager;
 
 class ImageCache
@@ -16,10 +19,11 @@ class ImageCache
      */
     public static function cache(string $key, callable $callback, $lifetime = null)
     {
+        $cachePath = storage_path('imagecache');
         $hash = md5($key);
 
         // Визначаємо шлях до кеш-файлу
-        $cacheFile = self::$cachePath . DIRECTORY_SEPARATOR . $hash;
+        $cacheFile = $cachePath . DIRECTORY_SEPARATOR . $hash;
 
         // Перевіряємо наявність кешу
         if (file_exists($cacheFile)) {
@@ -33,23 +37,21 @@ class ImageCache
                     unlink($cacheFile);
                 } else {
                     // Повертаємо зображення з кешу
-                    $manager = new ImageManager();
-                    return $manager->make($cacheFile);
+                    return file_get_contents($cacheFile);
                 }
             } else {
                 // Безстроковий кеш
-                $manager = new ImageManager();
-                return $manager->make($cacheFile);
+                return file_get_contents($cacheFile);
             }
         }
 
         // Генеруємо нове зображення
-        $manager = new ImageManager();
+        $manager = new ImageManager(Config::get('image'));
         $image = $callback($manager);
 
         // Створюємо директорію для кешу, якщо її немає
-        if (!is_dir(self::$cachePath)) {
-            mkdir(self::$cachePath, 0755, true);
+        if (!is_dir($cachePath)) {
+            mkdir($cachePath, 0755, true);
         }
 
         // Зберігаємо зображення в кеш
@@ -66,6 +68,6 @@ class ImageCache
      */
     public static function setCachePath($path)
     {
-        self::$cachePath = $path;
+        $cachePath = $path;
     }
 }

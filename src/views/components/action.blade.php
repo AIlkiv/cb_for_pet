@@ -31,9 +31,9 @@
         ';
     }
 
-    $label = $a['label'];
+    $label = $a['label'] ?? '';
     $title = ($a['title']) ?? $a['label'];
-    $icon = $a['icon'];
+    $icon = $a['icon'] ?? '';
     $color = $a['color'] ?? 'primary';
     $confirmation = $a['confirmation'] ?? [];
     $target = $a['target'] ?? '_self';
@@ -113,9 +113,9 @@
                     $a['url'] = str_replace("[".$key."]", $val, $a['url']);
                 }
 
-                $label = $a['label'];
+                $label = $a['label'] ?? '';
                 $url = $a['url']."?return_url=".urlencode(Request::fullUrl());
-                $icon = $a['icon'];
+                $icon = $a['icon'] ?? '';
                 $color = $a['color'] ?: 'primary';
 
                 if (isset($a['showIf'])) {
