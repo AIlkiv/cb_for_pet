@@ -53,7 +53,7 @@
         $dataPoints = array();
         $datax = array();
 
-        foreach ($sqls as $i => $sql) {
+        foreach (array_filter($sqls) as $i => $sql) {
 
             $datamerger = array();
 
